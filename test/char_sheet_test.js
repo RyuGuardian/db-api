@@ -32,20 +32,14 @@ describe("the character-sheet resource", function() {
       });
   });
 
-  it("should be able to create a sheet", function(done){
+  it("should be able to generate a sheet when no data is sent", function(done){
     chai.request(url)
       .post('sheets')
-      .send({
-        name: 'Alfred',
-        gender: 'f',
-        strength: 50,
-        intelligence: 50
-      })
       .end(function(err, res){
         expect(err).to.eql(null);
-        expect(res.body.name).to.eql('ALFRED');
-        expect(res.body.race).to.eql('human');
-        expect(res.body.gender).to.eql('F');
+        expect(res.body.name).to.have.length.within(4, 8);
+        expect(res.body.race).to.match(/^(human|elf|orc|dwarf|halfling|troll|goblin$)/);
+        expect(res.body.gender).to.eql('OTHER');
         expect(res.body.strength).to.eql(50);
         expect(res.body.intelligence).to.eql(50);
         expect(res.body.deceased).to.eql(false);
@@ -58,7 +52,8 @@ describe("the character-sheet resource", function() {
       .post('sheets')
       .send({
         name: 'test',
-        gender: 'fsadf',
+        race: 'huagnasdf',
+        gender: 'F',
         strength: 50,
         intelligence: 50
       })
@@ -75,7 +70,7 @@ describe("the character-sheet resource", function() {
         name: 'test',
         race: 'orc',
         gender: 'other',
-        strength: 100,
+        strength: 80,
         intelligence: 20,
         deceased: false
       });
@@ -110,5 +105,16 @@ describe("the character-sheet resource", function() {
           done();
         });
     });
+
+    it("should not like inputs that are invalid (on PUT)", function(done) {
+    chai.request(url)
+      .put('sheets/' + this.testSheet._id)
+      .send({name: '12345'})
+      .end(function(err, res) {
+        expect(res.status).to.eql(418);
+        expect(res.body.msg).to.eql('entry invalid; try again')
+        done();
+      });
+  });
   });
 });
