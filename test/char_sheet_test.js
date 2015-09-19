@@ -115,6 +115,12 @@ describe("the character-sheet resource", function() {
         expect(res.body.msg).to.eql('entry invalid; try again')
         done();
       });
-  });
+    });
+
+    it("should level-up characters", function() {
+      expect(this.testSheet.levelUp()).to.eql('Level up!');
+      expect(this.testSheet.strength).to.be.above(80);
+      expect(this.testSheet.intelligence).to.be.above(20);
+    });
   });
 });

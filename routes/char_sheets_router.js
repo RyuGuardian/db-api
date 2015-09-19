@@ -35,9 +35,9 @@ charSheetsRouter.put('/sheets/:id', jsonParser, function(req, res) {
   //console.log('PUT: ', req.body);
   CharSheet.update({_id: req.params.id},
     newSheetBody,
-    {runValidators: true},  //adding this causes async problems? ("Uncaught Error: Can't set headers after they are sent.")
+    {runValidators: true},  //adding this causes async problems ("Uncaught Error: Can't set headers after they are sent.")
     function(err, data) {
-    
+
     if(err) {
       //console.log('going to handle error\n  err message: ', err.message);
       handleError(err, res);
