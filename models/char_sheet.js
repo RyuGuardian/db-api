@@ -22,12 +22,13 @@ charSheetSchema.methods.levelUp = function() {
 
   this.save(function(err) {
     if(err) {
-      console.log(err);
       throw err;
     }
   });
 
-  return 'Level up!'; //this is returned even if save's validation fails (invalid info also gets saved for some reason)
+  //this is returned even if save's validation fails (async problem)
+    //(invalid info also gets saved for some reason)
+  return 'Level up!';
 };
 
 module.exports = mongoose.model('Character Sheet', charSheetSchema);

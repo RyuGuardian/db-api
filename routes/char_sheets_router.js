@@ -18,9 +18,7 @@ charSheetsRouter.get('/sheets', function(req, res) {
 });
 
 charSheetsRouter.post('/sheets', jsonParser, function(req, res) {
-  /*console.log('post: ', req.body);  //comment this out when not in use*/
   var newSheet = new CharSheet(req.body);
-  /*console.log('new sheet: ', newSheet);  //comment this out when not in use*/
   newSheet.save(function(err, data) {
     if(err) {
       handleError(err, res);
@@ -32,16 +30,13 @@ charSheetsRouter.post('/sheets', jsonParser, function(req, res) {
 charSheetsRouter.put('/sheets/:id', jsonParser, function(req, res) {
   var newSheetBody = req.body;
   delete newSheetBody._id;
-  //console.log('PUT: ', req.body);
   CharSheet.update({_id: req.params.id},
     newSheetBody,
     {runValidators: true},  //adding this causes async problems ("Uncaught Error: Can't set headers after they are sent.")
     function(err, data) {
 
     if(err) {
-      //console.log('going to handle error\n  err message: ', err.message);
       handleError(err, res);
-      console.log("shouldn't get here");  //problem: it still gets here when trying to update with invalid data
     }
     else {  //using else because process runs through if validation fails
       res.json({msg: 'Name changed'});
