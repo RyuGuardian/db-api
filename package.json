@@ -39,7 +39,9 @@
     "webpack-stream": "^2.1.1"
   },
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.14.0",
+    "eat": "^0.1.1",
     "express": "^4.13.3",
     "mongoose": "^4.1.7",
     "randomstring": "^1.1.0"
