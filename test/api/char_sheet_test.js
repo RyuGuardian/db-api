@@ -57,7 +57,7 @@ describe("the character-sheet resource", function() {
       .end(function(err, res){
         expect(err).to.eql(null);
         expect(res.body.name).to.have.length.within(4, 8);
-        expect(res.body.race).to.match(/^(human|elf|orc|dwarf|halfling|troll|goblin$)/);
+        expect(res.body.race).to.match(/^(human|elf|orc|dwarf|halfling|troll|goblin)$/);
         expect(res.body.gender).to.eql('OTHER');
         expect(res.body.strength).to.eql(50);
         expect(res.body.intelligence).to.eql(50);
