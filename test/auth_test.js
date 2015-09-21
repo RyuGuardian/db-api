@@ -90,5 +90,17 @@ describe('auth', function() {
         done();
       });
     });
+
+    it("should respond accordingly if username already exists", function(done) {
+      chai.request(url)
+        .post('signup')
+        .send({username: 'testman', password: 'fooey123'})
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.status).to.eql(418);
+          expect(res.body.msg).to.eql('name already taken');
+          done();
+        });
+    });
   });
 });
