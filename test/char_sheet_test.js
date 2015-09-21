@@ -9,6 +9,7 @@ process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
 require(__dirname + '/../server.js');
 
 var CharSheet = require(__dirname + '/../models/char_sheet');
+var User = require(__dirname + '/../models/user');
 
 var url = 'localhost:3000/api/';
 
@@ -20,6 +21,23 @@ describe("the character-sheet resource", function() {
       }
       done();
     });
+  });
+
+  before(function(done) {
+    var user = new User();
+    user.username = 'testman';
+    user.basic.username = 'testman';
+    user.generateHash('foobar123', function(err, res) {
+      if(err) throw err;
+      user.save(function(err, data) {
+        if(err) throw err;
+        user.generateToken(function(err, token) {
+          if(err) throw err;
+          this.token = token;
+          done();
+        }.bind(this));
+      }.bind(this));
+    }.bind(this));
   });
 
   it("should be able to get stats", function(done) {
@@ -35,6 +53,7 @@ describe("the character-sheet resource", function() {
   it("should be able to generate a sheet when no data is sent", function(done){
     chai.request(url)
       .post('sheets')
+      .send({token: this.token})
       .end(function(err, res){
         expect(err).to.eql(null);
         expect(res.body.name).to.have.length.within(4, 8);
@@ -51,11 +70,12 @@ describe("the character-sheet resource", function() {
     chai.request(url)
       .post('sheets')
       .send({
-        name: 'test',
+        name: 'testman',
         race: 'huagnasdf',
         gender: 'F',
         strength: 50,
-        intelligence: 50
+        intelligence: 50,
+        token: this.token
       })
       .end(function(err, res) {
         expect(res.status).to.eql(418);
@@ -72,7 +92,8 @@ describe("the character-sheet resource", function() {
         gender: 'other',
         strength: 80,
         intelligence: 20,
-        deceased: false
+        deceased: false,
+        token: this.token
       });
 
       testSheet.save(function(err, data) {
@@ -88,7 +109,7 @@ describe("the character-sheet resource", function() {
     it("should be able to update a char sheet", function(done) {
       chai.request(url)
         .put('sheets/' + this.testSheet._id)
-        .send({name: 'newName'})
+        .send({name: 'newName', token: this.token})
         .end(function(err, res) {
           expect(err).to.eql(null);
           expect(res.body.msg).to.eql('Name changed');
@@ -99,6 +120,7 @@ describe("the character-sheet resource", function() {
     it("should be able to delete a char sheet", function(done) {
       chai.request(url)
         .delete('sheets/' + this.testSheet._id)
+        .set('token', this.token)
         .end(function(err, res) {
           expect(err).to.eql(null);
           expect(res.body.msg).to.eql('Delete successful');
@@ -109,7 +131,7 @@ describe("the character-sheet resource", function() {
     it("should not like inputs that are invalid (on PUT)", function(done) {
     chai.request(url)
       .put('sheets/' + this.testSheet._id)
-      .send({name: '12345'})
+      .send({name: '12345', token: this.token})
       .end(function(err, res) {
         expect(res.status).to.eql(418);
         expect(res.body.msg).to.eql('entry invalid; try again')
