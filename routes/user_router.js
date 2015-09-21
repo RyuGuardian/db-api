@@ -48,7 +48,7 @@ usersRouter.get('/signin', httpBasic, function(req, res) {
       console.log('could not authenticate: ' + req.auth.username);
       return res.status(401).json({msg: 'could not authenticate'});
     }
-debugger;
+
     user.compareHash(req.auth.password, function(err, hashRes) {
       if(err) {
         return handleError(err, res);
