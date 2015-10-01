@@ -59,7 +59,7 @@ describe("the character-sheet resource", function() {
       })
       .end(function(err, res) {
         expect(res.status).to.eql(418);
-        expect(res.body.msg).to.eql('entry invalid; try again')
+        expect(res.body.msg).to.eql('entry invalid; try again');
         done();
       });
   });
@@ -77,7 +77,7 @@ describe("the character-sheet resource", function() {
 
       testSheet.save(function(err, data) {
         if(err) {
-          handleError(err, res);
+          throw err;
         }
 
         this.testSheet = data;
@@ -112,7 +112,7 @@ describe("the character-sheet resource", function() {
       .send({name: '12345'})
       .end(function(err, res) {
         expect(res.status).to.eql(418);
-        expect(res.body.msg).to.eql('entry invalid; try again')
+        expect(res.body.msg).to.eql('entry invalid; try again');
         done();
       });
     });

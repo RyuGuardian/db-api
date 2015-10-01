@@ -7,7 +7,6 @@ var handleError = require(__dirname + '/../lib/handle_error');
 
 var charSheetsRouter = module.exports = exports = express.Router();
 
-// charSheetsRouter.use(jsonParser);
 charSheetsRouter.get('/sheets', function(req, res) {
   CharSheet.find({}, function(err, data) {
     if(err) {
@@ -33,19 +32,18 @@ charSheetsRouter.put('/sheets/:id', jsonParser, function(req, res) {
   CharSheet.update({_id: req.params.id},
     newSheetBody,
     {runValidators: true},  //adding this causes async problems ("Uncaught Error: Can't set headers after they are sent.")
-    function(err, data) {
-
-    if(err) {
-      handleError(err, res);
-    }
-    else {  //using else because process runs through if validation fails
-      res.json({msg: 'Name changed'});
-    }
-  });
+    function(err) {
+      if(err) {
+        handleError(err, res);
+      }
+      else {  //using else because process runs through if validation fails
+        res.json({msg: 'Name changed'});
+      }
+    });
 });
 
 charSheetsRouter.delete('/sheets/:id', jsonParser, function(req, res) {
-  CharSheet.remove({_id: req.params.id}, function(err, data) {
+  CharSheet.remove({_id: req.params.id}, function(err) {
     if(err) {
       handleError(err, res);
     }
