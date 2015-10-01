@@ -18,8 +18,21 @@
 
     <ul id="sheetsList">
       <li data-ng-repeat="sheet in sheets">
-        {{sheet.name}}
-        <button data-ng-click="removeSheet(sheet)">Delete</button>
+        <p style="margin: 0" data-ng-if="!sheet.changingName">{{sheet.name}}</p>
+        <form data-ng-if="sheet.changingName" name="{{'sheetForm' + sheet._id}}" data-ng-submit="changeName(sheet)">
+          <input type="text" data-ng-model="sheet.name">
+          <button type="submit">Save Name</button>
+        </form>
+        <button data-ng-if="!sheet.changingName" data-ng-click="changingName(sheet)">Change Name</button>
+        <button data-ng-if="sheet.changingName" data-ng-click="cancelNameChange(sheet)">Cancel</button>
+        <ul>
+          <li>Race:&nbsp&nbsp{{sheet.race}}</li>
+          <li>Gender:&nbsp&nbsp{{sheet.gender}}</li>
+          <li>STR:&nbsp&nbsp{{sheet.strength}}</li>
+          <li>INT:&nbsp&nbsp{{sheet.intelligence}}</li>
+          <li>Alive?&nbsp&nbsp{{!sheet.deceased}}</li>
+        </ul>
+        <button data-ng-if="!sheet.changingName" data-ng-click="removeSheet(sheet)">Delete</button>
       </li>
     </ul>
 

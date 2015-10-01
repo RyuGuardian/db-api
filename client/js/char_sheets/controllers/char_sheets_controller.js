@@ -21,10 +21,29 @@ module.exports = function(app) {
       });
   };
 
+  $scope.changeName = function(sheet) {
+    sheet.changingName = false;
+    $http.put('/api/sheets/' + sheet._id, sheet)
+      .then(function() {
+      }, function(res) {
+        console.log(res);
+      });
+  };
+
+  $scope.changingName = function(sheet) {
+    sheet.oldName = sheet.name;
+    sheet.changingName = true;
+  };
+
+  $scope.cancelNameChange = function(sheet) {
+    sheet.changingName = false;
+    sheet.name = sheet.oldName;
+  };
+
   $scope.removeSheet = function(sheet) {
     $scope.sheets.splice($scope.sheets.indexOf(sheet), 1);
     $http.delete('/api/sheets/' + sheet._id, sheet)
-      .then(function(res) {
+      .then(function() {
       }, function(res) {
         $scope.getAll();
         console.log(res);
