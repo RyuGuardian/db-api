@@ -31,4 +31,4 @@ charSheetSchema.methods.levelUp = function() {
   return 'Level up!';
 };
 
-module.exports = mongoose.model('Character Sheet', charSheetSchema);
+module.exports = mongoose.model('CharacterSheet', charSheetSchema);

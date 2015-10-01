@@ -5,11 +5,23 @@
   <title>Character Sheets</title>
 </head>
 <body data-ng-app="charSheetApp">
-  <main data-ng-controller="CharSheetController">
+  <main data-ng-controller="CharSheetsController" data-ng-init="getAll()">
 
-    <h1>{{description}}</h1>
+    <h1>Character Sheets:</h1>
 
-    <input type="text" data-ng-model="description">
+    <form name"newSheetForm" data-ng-submit="createCharacterSheet(newSheet)">
+      <label for="name">New Character Name:
+        <input type="text" data-ng-model="newSheet.name">
+      </label>
+      <button type="submit">Create Character</button>
+    </form>
+
+    <ul id="sheetsList">
+      <li data-ng-repeat="sheet in sheets">
+        {{sheet.name}}
+        <button data-ng-click="removeSheet(sheet)">Delete</button>
+      </li>
+    </ul>
 
   </main>
   <script src="bundle.js"></script>  
