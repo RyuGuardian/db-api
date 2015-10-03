@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
 var webpack = require('webpack-stream');
+var Karma = require('karma').Server;
 
 gulp.task('jshint', function() {
   return gulp.src(['test/**/*.js', 'lib/**/*.js', 'models/**/*', 'routes/**/*', 'server.js', 'gulpfile.js', 'client/**/*.js'])
@@ -21,9 +22,8 @@ gulp.task('webpack:dev', function() {
 });
 
 gulp.task('webpack:test', function() {
-  return gulp.src('./test/client/test_entry.js')
+  return gulp.src('./test/client/entry.js')
     .pipe(webpack({
-      watch: true,
       output: {
         filename: 'test_bundle.js'
       }
@@ -39,7 +39,7 @@ gulp.task('staticfiles:dev', function() {
 });
 
 gulp.task('servertests', function() {
-  return gulp.src('test/api_test/char_sheet_test.js')
+  return gulp.src('test/api_test/**/*test.js')
     .pipe(mocha())
     .once('error', function(err) {
       console.log(err)
@@ -51,6 +51,11 @@ gulp.task('servertests', function() {
       }
     }.bind(this));
 })
+
+gulp.task('karmatests', ['webpack:test'], function(done) {
+  new Karma({configFile: __dirname + '/karma.conf.js'}, done)
+    .start();
+});
 
 gulp.task('build:dev', ['staticfiles:dev', 'webpack:dev']);
 gulp.task('default', ['build:dev']);
