@@ -39,7 +39,7 @@ gulp.task('staticfiles:dev', function() {
 });
 
 gulp.task('servertests', function() {
-  return gulp.src('test/api_test/**/*test.js')
+  return gulp.src('test/api/**/*test.js')
     .pipe(mocha())
     .once('error', function(err) {
       console.log(err)
