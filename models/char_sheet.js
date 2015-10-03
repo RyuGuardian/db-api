@@ -17,7 +17,7 @@ var charSheetSchema = new mongoose.Schema({
 //Also, don't allow certain fields to be changeable after character is made (race, gender)?
 
 charSheetSchema.methods.levelUp = function() {
-  this.strength += Math.floor(Math.random() * 2) + 500;
+  this.strength += Math.floor(Math.random() * 2) + 1;
   this.intelligence += Math.floor(Math.random() * 2) + 1;
 
   this.save(function(err) {

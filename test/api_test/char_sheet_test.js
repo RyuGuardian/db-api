@@ -6,9 +6,9 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 var mongoose = require('mongoose');
 process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
-require(__dirname + '/../server.js');
+require(__dirname + '/../../server.js');
 
-var CharSheet = require(__dirname + '/../models/char_sheet');
+var CharSheet = require(__dirname + '/../../models/char_sheet');
 
 var url = 'localhost:3000/api/';
 
