@@ -39,7 +39,7 @@ describe('character-sheet controller', function() {
       expect($scope.sheets[0].name).toBe('TESTER');
     });
 
-    it('should be able to create a note', function() {
+    it('should be able to create a character sheet', function() {
       $httpBackend.expectPOST('/api/sheets', {name: 'TESTER3'}).respond(200, {_id: 1, name: 'TESTER2'});
       $scope.newSheet = {name: 'HELLO'};
       $scope.createCharacterSheet({name: 'TESTER3'});
