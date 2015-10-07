@@ -42,7 +42,7 @@ module.exports = function(app) {
 
   $scope.removeSheet = function(sheet) {
     $scope.sheets.splice($scope.sheets.indexOf(sheet), 1);
-    $http.delete('/api/sheets/' + sheet._id, sheet)
+    $http.delete('/api/sheets/' + sheet._id, {params: sheet})
       .then(function() {
       }, function(res) {
         $scope.getAll();

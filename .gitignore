@@ -2,4 +2,4 @@ node_modules/**
 db/**
 build/**
 .jshintrc
-test/client/test_bundle.js
+**/test_bundle.js

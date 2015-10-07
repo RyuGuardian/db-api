@@ -33,19 +33,44 @@ describe('character-sheet controller', function() {
     });
 
     it('should make a GET request when getAll() is called', function() {
-      $httpBackend.expectGET('/api/sheets').respond(200, [{name: 'TESTER'}]);
+      $httpBackend.expectGET('/api/sheets').respond(200, [{name: 'TEST GET'}]);
       $scope.getAll();
       $httpBackend.flush();
-      expect($scope.sheets[0].name).toBe('TESTER');
+      expect($scope.sheets[0].name).toBe('TEST GET');
     });
 
     it('should be able to create a character sheet', function() {
-      $httpBackend.expectPOST('/api/sheets', {name: 'TESTER3'}).respond(200, {_id: 1, name: 'TESTER2'});
-      $scope.newSheet = {name: 'HELLO'};
-      $scope.createCharacterSheet({name: 'TESTER3'});
+      $httpBackend.expectPOST('/api/sheets', {name: 'TEST CREATE'}).respond(200, {_id: 1, name: 'TEST POST'});
+      $scope.newSheet = {name: 'TEST NULL NEW SHEET'};
+      $scope.createCharacterSheet({name: 'TEST CREATE'});
       $httpBackend.flush();
-      expect($scope.sheets[0].name).toBe('TESTER2');
+      expect($scope.sheets[0].name).toBe('TEST POST');
       expect($scope.newSheet).toBe(null);
+    });
+
+    it('should be able to start to change a name, cancel it, and actually update a name', function() {
+      var testSheet = {_id: 1, name: 'TEST NAME'};
+      $httpBackend
+        .expectPUT('/api/sheets/1', {_id: 1, name: 'TEST NAME', oldName: 'TEST NAME', changingName: false})
+        .respond(200, {msg: 'Name changed'});
+      $scope.changingName(testSheet);
+      expect(testSheet.changingName).toBe(true);
+      expect(testSheet.oldName).toBe('TEST NAME');
+      testSheet.name = 'TEST CANCEL'
+      $scope.cancelNameChange(testSheet);
+      expect(testSheet.changingName).toBe(false);
+      expect(testSheet.oldName).toBe('TEST NAME');
+      expect(testSheet.name).toBe('TEST NAME')
+      $scope.changeName(testSheet);
+      $httpBackend.flush();
+    });
+
+    it('should be able to remove a character sheet', function() {
+      $scope.sheets[0] = {_id: 1, name: 'TEST REMOVE'};
+      $httpBackend.expectDELETE('/api/sheets/1?_id=1&name=TEST+REMOVE').respond(200, {msg: 'Delete successful'});
+      $scope.removeSheet({_id: 1, name: 'TEST REMOVE'});
+      expect($scope.sheets[0]).toBe(undefined);
+      $httpBackend.flush();
     });
   });
 });
