@@ -63,14 +63,16 @@ describe('character-sheet controller', function() {
       expect(testSheet.name).toBe('TEST NAME')
       $scope.changeName(testSheet);
       $httpBackend.flush();
+      expect(testSheet.changingName).toBe(false);
     });
 
     it('should be able to remove a character sheet', function() {
-      $scope.sheets[0] = {_id: 1, name: 'TEST REMOVE'};
-      $httpBackend.expectDELETE('/api/sheets/1?_id=1&name=TEST+REMOVE').respond(200, {msg: 'Delete successful'});
-      $scope.removeSheet({_id: 1, name: 'TEST REMOVE'});
-      expect($scope.sheets[0]).toBe(undefined);
+      var testSheet = {_id: 1, name: 'TEST REMOVE'};
+      $scope.sheets[0] = testSheet;
+      $httpBackend.expectDELETE('/api/sheets/1').respond(200, {msg: 'Delete successful'});
+      $scope.removeSheet(testSheet);
       $httpBackend.flush();
+      expect($scope.sheets[0]).toBe(undefined);
     });
   });
 });

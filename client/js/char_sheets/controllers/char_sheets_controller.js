@@ -1,33 +1,37 @@
 module.exports = function(app) {
-  app.controller('CharSheetsController', ['$scope', '$http', function($scope, $http) {
+  app.controller('CharSheetsController', ['$scope', 'Resource', function($scope, Resource) {
   $scope.sheets = [];
+  var sheetResource = Resource('sheets');
 
   $scope.getAll = function() {
-    $http.get('/api/sheets')
-      .then(function(res) {       //successful response from GET request...
-        $scope.sheets = res.data; //...gives us sheets
-      }, function(res) {          //failed response
-        console.log(res);
-      });
+    sheetResource.getAll(function(err, data) {
+      if(err) {
+        return console.log(err);
+      }
+
+      $scope.sheets = data;
+    });
   };
 
   $scope.createCharacterSheet = function(sheet) {
-    $http.post('/api/sheets', sheet)
-      .then(function(res) {
-        $scope.sheets.push(res.data);
-        $scope.newSheet = null;
-      }, function(res) {
-        console.log(res);
-      });
+    sheetResource.create(sheet, function(err, data) {
+      if(err) {
+        return console.log(err);
+      }
+
+      $scope.newSheet = null;
+      $scope.sheets.push(data);
+    });
   };
 
   $scope.changeName = function(sheet) {
-    sheet.changingName = false;
-    $http.put('/api/sheets/' + sheet._id, sheet)
-      .then(function() {
-      }, function(res) {
-        console.log(res);
-      });
+    sheetResource.update(sheet, function(err) {
+      sheet.changingName = false;
+      
+      if(err) {
+        return console.log(err);
+      }
+    });
   };
 
   $scope.changingName = function(sheet) {
@@ -41,13 +45,14 @@ module.exports = function(app) {
   };
 
   $scope.removeSheet = function(sheet) {
-    $scope.sheets.splice($scope.sheets.indexOf(sheet), 1);
-    $http.delete('/api/sheets/' + sheet._id, {params: sheet})
-      .then(function() {
-      }, function(res) {
+    sheetResource.remove(sheet, function(err) {
+      if(err) {
         $scope.getAll();
-        console.log(res);
-      });
+        return console.log(err);
+      }
+
+      $scope.sheets.splice($scope.sheets.indexOf(sheet), 1);
+    });
   };
 
   }]);

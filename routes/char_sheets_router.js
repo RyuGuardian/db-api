@@ -29,6 +29,7 @@ charSheetsRouter.post('/sheets', jsonParser, function(req, res) {
 charSheetsRouter.put('/sheets/:id', jsonParser, function(req, res) {
   var newSheetBody = req.body;
   delete newSheetBody._id;
+  newSheetBody.name = newSheetBody.name.toUpperCase();
   CharSheet.update({_id: req.params.id},
     newSheetBody,
     {runValidators: true},  //adding this causes async problems ("Uncaught Error: Can't set headers after they are sent.")
