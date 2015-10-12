@@ -1,6 +1,7 @@
 module.exports = function(app) {
   app.controller('CharSheetsController', ['$scope', 'Resource', function($scope, Resource) {
     $scope.sheets = [];
+    $scope.newSheet = {};
     var sheetResource = Resource('sheets');
 
     $scope.getAll = function() {
@@ -19,7 +20,7 @@ module.exports = function(app) {
           return console.log(err);
         }
 
-        $scope.newSheet = null;
+        $scope.newSheet = {};
         $scope.sheets.push(data);
       });
     };
