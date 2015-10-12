@@ -28,4 +28,43 @@ describe('resource service', function() {
     
     $httpBackend.flush();
   });
+
+  it('should make a POST request', function() {
+    $httpBackend.expectPOST('/api/sheets').respond(200, [{_id: 1, name: 'TEST SHEET'}]);
+    
+    var testSheet = {name: 'TEST SHEET'};
+
+    sheetsResource.create(testSheet, function(err, data) {
+      expect(err).toBe(null);
+      expect(typeof data).toBe('object');
+    });
+    
+    $httpBackend.flush();
+  });
+
+  it('should make a PUT request', function() {
+    $httpBackend.expectPUT('/api/sheets/1').respond(200, [{_id: 1, name: 'TEST SHEET'}]);
+    
+    var testSheet = {_id: 1, name: 'TEST SHEET'};
+
+    sheetsResource.update(testSheet, function(err, data) {
+      expect(err).toBe(null);
+      expect(typeof data).toBe('object');
+    });
+    
+    $httpBackend.flush();
+  });
+
+  it('should make a DELETE request', function() {
+    $httpBackend.expectDELETE('/api/sheets/1').respond(200, [{_id: 1, name: 'TEST SHEET'}]);
+    
+    var testSheet = {_id: 1, name: 'TEST SHEET'};
+
+    sheetsResource.remove(testSheet, function(err, data) {
+      expect(err).toBe(null);
+      expect(typeof data).toBe('object');
+    });
+    
+    $httpBackend.flush();
+  });
 });
