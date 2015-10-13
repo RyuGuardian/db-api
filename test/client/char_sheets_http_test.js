@@ -45,7 +45,7 @@ describe('character-sheet controller', function() {
       $scope.createCharacterSheet({name: 'TEST CREATE'});
       $httpBackend.flush();
       expect($scope.sheets[0].name).toBe('TEST POST');
-      expect($scope.newSheet).toBe(null);
+      expect($scope.newSheet).toEqual({});
     });
 
     it('should be able to start to change a name, cancel it, and actually update a name', function() {

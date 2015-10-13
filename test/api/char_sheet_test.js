@@ -9,7 +9,7 @@ process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
 require(__dirname + '/../../server.js');
 
 var CharSheet = require(__dirname + '/../../models/char_sheet');
-var User = require(__dirname + '/../models/user');
+var User = require(__dirname + '/../../models/user');
 
 var url = 'localhost:3000/api/';
 
