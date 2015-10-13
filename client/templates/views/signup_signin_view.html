@@ -1,0 +1,22 @@
+<section>
+  <h1>{{h1Text}}</h1>
+
+  <form name="userForm" data-ng-submit="sendToServer(user)">
+    <label>
+      Username
+      <input type="text" data-ng-model="user.username">
+    </label>
+    
+    <label>
+      Password
+      <input type="password" data-ng-model="user.password">
+    </label>
+    
+    <label data-ng-if="confirmPassword">
+      <p data-ng-if="!passwordMatch(user)">Passwords do not match!</p>
+      Password Confirmation
+      <input type="password" data-ng-model="user.confirmation">
+    </label>
+    <button type="submit" data-ng-disabled="disableButton(user)">{{buttonText}}</button>
+  </form>
+</section>

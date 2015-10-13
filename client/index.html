@@ -8,38 +8,7 @@
   <h1>Character Sheets:</h1>
     This app lets you make character sheets for your fantasy adventures.
   </div>
-  <main data-ng-controller="CharSheetsController" data-ng-init="getAll()">
-    <div 
-      data-sheet-form save="createCharacterSheet(sheet)"
-      data-sheet="newSheet"
-      data-label-text="New Sheet"
-      data-button-text="Create Sheet">
-    </div>
-
-    <ul id="sheetsList">
-      <li data-ng-repeat="sheet in sheets">
-        <p style="margin: 0" data-ng-if="!sheet.changingName">{{sheet.name}}</p>
-        <div
-          data-sheet-form
-          data-ng-if="sheet.changingName"
-          data-label-text="Change Name"
-          data-button-text="Save New Name"
-          data-sheet="sheet"
-          data-save="changeName(sheet)">
-        </div>
-        <button data-ng-if="!sheet.changingName" data-ng-click="changingName(sheet)">Change Name</button>
-        <button data-ng-if="sheet.changingName" data-ng-click="cancelNameChange(sheet)">Cancel</button>
-        <ul>
-          <li>Race:&nbsp&nbsp{{sheet.race}}</li>
-          <li>Gender:&nbsp&nbsp{{sheet.gender}}</li>
-          <li>STR:&nbsp&nbsp{{sheet.strength}}</li>
-          <li>INT:&nbsp&nbsp{{sheet.intelligence}}</li>
-          <li>Alive?&nbsp&nbsp{{!sheet.deceased}}</li>
-        </ul>
-        <button data-ng-if="!sheet.changingName" data-ng-click="removeSheet(sheet)">Delete</button>
-      </li>
-    </ul>
-
+  <main data-ng-view>
   </main>
   <script src="bundle.js"></script>  
 </body>
