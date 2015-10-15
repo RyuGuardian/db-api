@@ -8,7 +8,7 @@ var eatAuth = require(__dirname + '/../lib/eat_auth');
 
 var charSheetsRouter = module.exports = exports = express.Router();
 
-charSheetsRouter.get('/sheets', function(req, res) {
+charSheetsRouter.get('/sheets', jsonParser, eatAuth, function(req, res) {
   CharSheet.find({}, function(err, data) {
     if(err) {
       return handleError(err, res);

@@ -1,5 +1,12 @@
 module.exports = function(app) {
-  app.controller('CharSheetsController', ['$scope', 'Resource', function($scope, Resource) {
+  app.controller('CharSheetsController', ['$scope', 'Resource', '$http', '$cookies', '$location', function($scope, Resource, $http, $cookies, $location) {
+    var eat = $cookies.get('eat');
+    
+    if(!(eat && eat.length)) {
+      $location.path('/signup');
+    }
+
+    $http.defaults.headers.common.token = eat;
     $scope.sheets = [];
     $scope.newSheet = {};
     var sheetResource = Resource('sheets');
