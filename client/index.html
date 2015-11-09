@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Character Sheets</title>
+</head>
+<body data-ng-app="charSheetApp">
+  <a data-ng-if="loggedIn()" href data-ng-click="logOut()">Log Out{{username ? ' of ' + username : ''}}</a>
+  <h1>Character Sheets:</h1>
+    This app lets you make character sheets for your fantasy adventures.
+  </div>
+  <main data-ng-view>
+  </main>
+  <script src="bundle.js"></script>  
+</body>
+</html>
