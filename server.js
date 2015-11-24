@@ -3,7 +3,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/char_sheet_dev');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/char_sheet_dev');
 process.env.APP_SECRET = process.env.APP_SECRET || 'changemechangemechangeme';
 
 var charRouter = require(__dirname + '/routes/char_sheets_router');
