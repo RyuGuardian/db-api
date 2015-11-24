@@ -11,7 +11,7 @@ app.use('/api', charRouter);
 var userRouter = require(__dirname + '/routes/user_router');
 app.use('/api', userRouter);
 
-var port = process.env.PORT = PORT || 3000;
+var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.log("Server listening... (Port ", port, ")");
