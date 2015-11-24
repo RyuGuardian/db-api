@@ -7,6 +7,7 @@ chai.use(chaiHttp);
 var mongoose = require('mongoose');
 process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
 require(__dirname + '/../server.js');
+var handleError = require(__dirname + '/../lib/handle_error');
 
 var CharSheet = require(__dirname + '/../models/char_sheet');
 var User = require(__dirname + '/../models/user');
@@ -28,11 +29,11 @@ describe("the character-sheet resource", function() {
     user.username = 'testman';
     user.basic.username = 'testman';
     user.generateHash('foobar123', function(err, res) {
-      if(err) throw err;
+      if(err) { throw err; }
       user.save(function(err, data) {
-        if(err) throw err;
+        if(err) { throw err; }
         user.generateToken(function(err, token) {
-          if(err) throw err;
+          if(err) { throw err; }
           this.token = token;
           done();
         }.bind(this));
@@ -79,7 +80,7 @@ describe("the character-sheet resource", function() {
       })
       .end(function(err, res) {
         expect(res.status).to.eql(418);
-        expect(res.body.msg).to.eql('entry invalid; try again')
+        expect(res.body.msg).to.eql('entry invalid; try again');
         done();
       });
   });
@@ -134,7 +135,7 @@ describe("the character-sheet resource", function() {
       .send({name: '12345', token: this.token})
       .end(function(err, res) {
         expect(res.status).to.eql(418);
-        expect(res.body.msg).to.eql('entry invalid; try again')
+        expect(res.body.msg).to.eql('entry invalid; try again');
         done();
       });
     });

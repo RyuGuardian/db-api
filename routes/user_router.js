@@ -1,9 +1,7 @@
 'use strict';
 
 var express = require('express');
-var User = require(__dirname + '/../models/user');
 var jsonParser = require('body-parser').json();
-var handleError = require(__dirname + '/../lib/handle_error');
 var httpBasic = require(__dirname + '/../lib/http_basic');
 var userEvents = require(__dirname + '/../lib/user_events');
 
