@@ -14,5 +14,5 @@ app.use('/api', userRouter);
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
-  console.log("Server listening... (Port ", port, ")");
+  console.log("Server listening... (Port " + port + ")");
 });
