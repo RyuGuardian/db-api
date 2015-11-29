@@ -53,9 +53,9 @@ describe('auth', function() {
       var user = new User();
       user.username = 'testman';
       user.basic.username = 'testman';
-      user.generateHash('foobar123', function(err, res) {
+      user.generateHash('foobar123', function(err) {
         if(err) { throw err; }
-        user.save(function(err, data) {
+        user.save(function(err) {
           if(err) { throw err; }
           user.generateToken(function(err, token) {
             if(err) { throw err; }

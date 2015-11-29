@@ -6,11 +6,11 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 var mongoose = require('mongoose');
 process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
-require(__dirname + '/../server.js');
-var handleError = require(__dirname + '/../lib/handle_error');
 
-var CharSheet = require(__dirname + '/../models/char_sheet');
-var User = require(__dirname + '/../models/user');
+require(__dirname + '/../../server.js');
+
+var CharSheet = require(__dirname + '/../../models/char_sheet');
+var User = require(__dirname + '/../../models/user');
 
 var url = 'localhost:3000/api/';
 
@@ -28,9 +28,9 @@ describe("the character-sheet resource", function() {
     var user = new User();
     user.username = 'testman';
     user.basic.username = 'testman';
-    user.generateHash('foobar123', function(err, res) {
+    user.generateHash('foobar123', function(err) {
       if(err) { throw err; }
-      user.save(function(err, data) {
+      user.save(function(err) {
         if(err) { throw err; }
         user.generateToken(function(err, token) {
           if(err) { throw err; }
@@ -46,7 +46,7 @@ describe("the character-sheet resource", function() {
       .get('sheets')
       .end(function(err, res) {
         expect(err).to.eql(null);
-        expect(Array.isArray(res.body)).to.eql(true);
+        expect(typeof res.body).to.eql('object');
         done();
       });
   });
@@ -99,7 +99,7 @@ describe("the character-sheet resource", function() {
 
       testSheet.save(function(err, data) {
         if(err) {
-          handleError(err, res);
+          throw err;
         }
 
         this.testSheet = data;

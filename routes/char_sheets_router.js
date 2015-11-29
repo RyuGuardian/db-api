@@ -8,7 +8,7 @@ var eatAuth = require(__dirname + '/../lib/eat_auth');
 
 var charSheetsRouter = module.exports = exports = express.Router();
 
-charSheetsRouter.get('/sheets', function(req, res) {
+charSheetsRouter.get('/sheets', jsonParser, eatAuth, function(req, res) {
   CharSheet.find({}, function(err, data) {
     if(err) {
       return handleError(err, res);
@@ -32,18 +32,20 @@ charSheetsRouter.post('/sheets', jsonParser, eatAuth, function(req, res) {
 charSheetsRouter.put('/sheets/:id', jsonParser, eatAuth, function(req, res) {
   var newSheetBody = req.body;
   delete newSheetBody._id;
+  newSheetBody.name = newSheetBody.name.toUpperCase();
   CharSheet.update({_id: req.params.id},
     newSheetBody,
-    {runValidators: true},  //adding this causes async problems ("Uncaught Error: Can't set headers after they are sent.")
-    function(err, data) {
+    {runValidators: true},  //adding this caused async problems ("Uncaught Error: Can't set headers after they are sent.")
 
-    if(err) {
-      return handleError(err, res);
+    function(err, data) {
+      if(err) {
+        return handleError(err, res);
+      }
+      else {  //using else because process runs through if validation fails; --added return above, might not need this anymore? need to test
+        res.json({msg: 'Name changed'});
+      }
     }
-    else {  //using else because process runs through if validation fails; --added return above, might not need this anymore? need to test
-      res.json({msg: 'Name changed'});
-    }
-  });
+  );
 });
 
 charSheetsRouter.delete('/sheets/:id', jsonParser, eatAuth, function(req, res) {

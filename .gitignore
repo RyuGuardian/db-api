@@ -1,2 +1,5 @@
 node_modules/**
 db/**
+build/**
+.jshintrc
+**/test_bundle.js
