@@ -10,7 +10,6 @@ var eatAuth = require(__dirname + '/../lib/eat_auth');
 
 var usersRouter = module.exports = exports = express.Router();
 
-
 usersRouter.post('/signup', jsonParser, function(req, res) {
   userEvents.emit('validate_new_user', req, res);
 });

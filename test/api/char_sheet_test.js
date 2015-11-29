@@ -6,6 +6,7 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 var mongoose = require('mongoose');
 process.env.MONGO_URL = 'mongodb://localhost/char_sheet_test';
+
 require(__dirname + '/../../server.js');
 
 var CharSheet = require(__dirname + '/../../models/char_sheet');
@@ -27,12 +28,12 @@ describe("the character-sheet resource", function() {
     var user = new User();
     user.username = 'testman';
     user.basic.username = 'testman';
-    user.generateHash('foobar123', function(err, res) {
-      if(err) throw err;
-      user.save(function(err, data) {
-        if(err) throw err;
+    user.generateHash('foobar123', function(err) {
+      if(err) { throw err; }
+      user.save(function(err) {
+        if(err) { throw err; }
         user.generateToken(function(err, token) {
-          if(err) throw err;
+          if(err) { throw err; }
           this.token = token;
           done();
         }.bind(this));
@@ -45,7 +46,7 @@ describe("the character-sheet resource", function() {
       .get('sheets')
       .end(function(err, res) {
         expect(err).to.eql(null);
-        expect(Array.isArray(res.body)).to.eql(true);
+        expect(typeof res.body).to.eql('object');
         done();
       });
   });

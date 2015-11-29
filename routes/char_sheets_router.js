@@ -13,7 +13,8 @@ charSheetsRouter.get('/sheets', jsonParser, eatAuth, function(req, res) {
     if(err) {
       return handleError(err, res);
     }
-      res.json(data);
+    
+    res.json(data);
   });
 });
 
@@ -23,6 +24,7 @@ charSheetsRouter.post('/sheets', jsonParser, eatAuth, function(req, res) {
     if(err) {
       return handleError(err, res);
     }
+    
     res.json(data);
   });
 });

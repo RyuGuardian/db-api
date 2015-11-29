@@ -56,11 +56,11 @@ describe('character-sheet controller', function() {
       $scope.changingName(testSheet);
       expect(testSheet.changingName).toBe(true);
       expect(testSheet.oldName).toBe('TEST NAME');
-      testSheet.name = 'TEST CANCEL'
+      testSheet.name = 'TEST CANCEL';
       $scope.cancelNameChange(testSheet);
       expect(testSheet.changingName).toBe(false);
       expect(testSheet.oldName).toBe('TEST NAME');
-      expect(testSheet.name).toBe('TEST NAME')
+      expect(testSheet.name).toBe('TEST NAME');
       $scope.changeName(testSheet);
       $httpBackend.flush();
       expect(testSheet.changingName).toBe(false);

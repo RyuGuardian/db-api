@@ -6,7 +6,13 @@ var Karma = require('karma').Server;
 
 gulp.task('jshint', function() {
   return gulp.src(['test/**/*.js', 'lib/**/*.js', 'models/**/*', 'routes/**/*', 'server.js', 'gulpfile.js', 'client/**/*.js'])
-    .pipe(jshint())
+    .pipe(jshint({
+      node: true,
+      globals: {
+        angular: true,
+        expect: true
+      }
+    }))
     .pipe(jshint.reporter('default'));
 });
 
