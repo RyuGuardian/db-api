@@ -14,7 +14,7 @@ charSheetsRouter.get('/sheets', jsonParser, eatAuth, function(req, res) {
       return handleError(err, res);
     }
     
-    res.json(data);
+    return res.json(data);
   });
 });
 
@@ -25,7 +25,7 @@ charSheetsRouter.post('/sheets', jsonParser, eatAuth, function(req, res) {
       return handleError(err, res);
     }
     
-    res.json(data);
+    return res.json(data);
   });
 });
 
@@ -37,13 +37,12 @@ charSheetsRouter.put('/sheets/:id', jsonParser, eatAuth, function(req, res) {
     newSheetBody,
     {runValidators: true},  //adding this caused async problems ("Uncaught Error: Can't set headers after they are sent.")
 
-    function(err, data) {
+    function(err) {
       if(err) {
         return handleError(err, res);
       }
-      else {  //using else because process runs through if validation fails; --added return above, might not need this anymore? need to test
-        res.json({msg: 'Name changed'});
-      }
+      else
+      return res.json({msg: 'Name changed'});
     }
   );
 });
@@ -54,6 +53,6 @@ charSheetsRouter.delete('/sheets/:id', jsonParser, eatAuth, function(req, res) {
       return handleError(err, res);
     }
 
-    res.json({msg: 'Delete successful'});
+    return res.json({msg: 'Delete successful'});
   });
 });
