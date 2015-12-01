@@ -4,7 +4,12 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 
-app.use(express.static(__dirname + '/build'));
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/frontend'));
+}
+else {
+  app.use(express.static(__dirname + '/build'));
+}
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/char_sheet_dev');
 process.env.APP_SECRET = process.env.APP_SECRET || 'changemechangemechangeme';
