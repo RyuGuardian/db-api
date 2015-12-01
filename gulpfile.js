@@ -1,5 +1,8 @@
+var gulp = require('gulp');
+var webpack = require('webpack-stream');
+var Karma = require('karma').Server;
+
 if(process.env.NODE_ENV !== 'production') {
-  var gulp = require('gulp');
   var mocha = require('gulp-mocha');
   var jshint = require('gulp-jshint');
 
@@ -44,9 +47,6 @@ if(process.env.NODE_ENV !== 'production') {
       }.bind(this));
   });
 }
-
-var webpack = require('webpack-stream');
-var Karma = require('karma').Server;
 
 gulp.task('webpack:dev', function() {
   return gulp.src('./client/js/app.js')
