@@ -25,11 +25,7 @@
   },
   "homepage": "https://github.com/RyuGuardian/db-api#readme",
   "devDependencies": {
-    "angular": "^1.4.7",
-    "angular-base64": "^2.0.5",
-    "angular-cookies": "^1.4.7",
     "angular-mocks": "^1.4.7",
-    "angular-route": "^1.4.7",
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
     "gulp-jshint": "^1.11.2",
@@ -41,6 +37,10 @@
     "phantomjs": "^1.9.18"
   },
   "dependencies": {
+    "angular": "^1.4.7",
+    "angular-base64": "^2.0.5",
+    "angular-cookies": "^1.4.7",
+    "angular-route": "^1.4.7",
     "gulp": "^3.9.0",
     "karma": "^0.13.10",
     "webpack-stream": "^2.1.1",
