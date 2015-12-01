@@ -1,4 +1,4 @@
-if(!process.env.PRODUCTION) {
+if(!process.env.NODE_ENV !== 'production') {
   var gulp = require('gulp');
   var mocha = require('gulp-mocha');
   var jshint = require('gulp-jshint');
